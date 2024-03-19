@@ -6,6 +6,7 @@ import MovieCard from "./MovieCard";
 import FilterGroup from "./FilterGroup";
 
 const MovieList = ({ type, title, emoji }) => {
+  const apiKey = import.meta.env.VITE_API_KEY;
   const [movies, setMovies] = useState([]);
   const [filterMovies, setFilterMovies] = useState([]);
   const [minRating, setMinRating] = useState(0);
@@ -16,7 +17,7 @@ const MovieList = ({ type, title, emoji }) => {
 
   useEffect(() => {
     fetchMovies();
-  }, []);
+  }, [type]);
 
   useEffect(() => {
     if (sort.by !== "default") {
@@ -27,7 +28,7 @@ const MovieList = ({ type, title, emoji }) => {
 
   const fetchMovies = async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${type}?api_key=cf7f68bfdd4a357aeab7e2344f194268`
+      `https://api.themoviedb.org/3/movie/${type}?api_key=${apiKey}`
     );
     const data = await response.json();
     setMovies(data.results);
